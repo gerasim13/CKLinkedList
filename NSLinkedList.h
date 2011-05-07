@@ -44,8 +44,16 @@ struct LNode {
 - (BOOL)containsObject:(id)anObject;		// (YES) if passed object is in the list, (NO) otherwise
 - (int)count;								// how many objects are stored
 - (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
-- (void)pushNodeFront:(LNode *)n;			// adds a node object to the begining of the list
+- (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
 
+// Insert objects
+- (void)insertObject:(id)anObject beforeNode:(LNode *)node;
+- (void)insertObject:(id)anObject afterNode:(LNode *)node;
+- (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
+
+// Prepend/append - simple references to keep my sanity
+- (void)prependObject:(id)anObject;
+- (void)appendObject:(id)anObject;
 
 //- (void)replaceObjectAtIndex:(int) withObject:(id);	// replaces object at a given index with the passed object
 
