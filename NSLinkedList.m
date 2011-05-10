@@ -225,7 +225,9 @@
 
 - (BOOL)removeObjectEqualTo:(id)anObject {
 	
-	for (LNode *n = first; n; n=n->next) {
+    LNode *n = nil;
+    
+	for (n = first; n; n=n->next) {
 		if (n->obj == anObject) {
 			[n->obj release];
 			[self removeNode:n];
@@ -255,7 +257,8 @@
 
 
 - (void)dumpList {
-	for (LNode *n = first; n; n=n->next) {
+    LNode *n = nil;
+	for (n = first; n; n=n->next) {
 		NSLog(@"0x%x", (int)n);
 	}	
 }
@@ -268,7 +271,9 @@
 
 - (BOOL)containsObject:(id)anObject {
 	
-	for (LNode *n = first; n; n=n->next) {
+    LNode *n = nil;
+    
+	for (n = first; n; n=n->next) {
 		if (n->obj == anObject) return YES;
 	}
 	
@@ -284,6 +289,7 @@
 
 
 @end
+
 LNode * LNodeMake(id obj, LNode *next, LNode *prev) {
 	LNode *n = malloc(sizeof(LNode));
 	n->next = next;

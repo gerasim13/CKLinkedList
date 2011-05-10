@@ -1,10 +1,8 @@
 //
 // NSLinkedList Tests
 //
-// compile with:
-// g++ -c NSLinkedList.m -ObjC -framework Foundation 2>/dev/null; g++ NSLinkedList.o NSLinkedList-test.m -o LLtest -ObjC -framework Foundation
 // test with:
-// ./LLtest
+// make test
 
 #import <assert.h>
 #import "NSLinkedList.h"
@@ -93,9 +91,17 @@ void test_add_remove() {
     assert([list count] == FILL_COUNT-2);
     assert(node);
     assert([(NSString *)node isEqualToString:@"99"]);
-          
 
-    
+    int c = [list count]
+
+    for (i = 0; i < FILL_COUNT/2; i++) {
+        id node = [list popBack];
+        assert([list count] == --c);
+        
+        assert([(NSString *)node isEqualToString:[NSString stringWithFormat:@"%d", c]]);
+
+    }
+
     
     
     

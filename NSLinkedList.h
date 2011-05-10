@@ -55,7 +55,7 @@ struct LNode {
 - (void)prependObject:(id)anObject;
 - (void)appendObject:(id)anObject;
 
-//- (void)replaceObjectAtIndex:(int) withObject:(id);	// replaces object at a given index with the passed object
+- (void)replaceObjectAtIndex:(int) withObject:(id);	// replaces object at a given index with the passed object
 
 @property (readonly) LNode *first;
 @property (readonly) LNode *last;
