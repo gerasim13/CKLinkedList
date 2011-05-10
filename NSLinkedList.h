@@ -5,7 +5,7 @@
 //  Created by Matt Schettler on 5/30/10.
 //  Copyright 2010 mschettler@gmail.com. All rights reserved.
 //
-//	V1.1
+//	V1.2
 //
 
 #import <Foundation/Foundation.h>
@@ -26,8 +26,6 @@ struct LNode {
 	
 	unsigned int size;
 	
-//	LNode *iter;
-	
 }
 
 - (id)init;									// init an empty list
@@ -43,6 +41,8 @@ struct LNode {
 - (void)dumpList;							// dumps all the pointers in the list to NSLog
 - (BOOL)containsObject:(id)anObject;		// (YES) if passed object is in the list, (NO) otherwise
 - (int)count;								// how many objects are stored
+- (int)size;								// how many objects are stored
+- (int)length;								// how many objects are stored
 - (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
 - (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
 
@@ -55,7 +55,7 @@ struct LNode {
 - (void)prependObject:(id)anObject;
 - (void)appendObject:(id)anObject;
 
-- (void)replaceObjectAtIndex:(int) withObject:(id);	// replaces object at a given index with the passed object
+//- (void)replaceObjectAtIndex:(int) withObject:(id)obj;	// replaces object at a given index with the passed object
 
 @property (readonly) LNode *first;
 @property (readonly) LNode *last;

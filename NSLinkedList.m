@@ -82,33 +82,35 @@
 
 
 - (void)insertObject:(id)anObject beforeNode:(LNode *)node {
-  [self insertObject:anObject betweenNode:node->prev andNode:node];
+    [self insertObject:anObject betweenNode:node->prev andNode:node];
 }
 
 
 - (void)insertObject:(id)anObject afterNode:(LNode *)node {
-  [self insertObject:anObject betweenNode:node andNode:node->next];
+    [self insertObject:anObject betweenNode:node andNode:node->next];
 }
 
 
 - (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode {
-
+    
 	if (anObject == nil) return;
 	
 	LNode *n = LNodeMake(anObject, nextNode, previousNode);
 	
-	if (previousNode)
-	  previousNode->next = n;
-  else
-    first = n;
-
-	if (nextNode)
-	  nextNode->prev = n;
-  else
-    last = n;
+	if (previousNode) {
+        previousNode->next = n;
+    } else {
+        first = n;
+    }
+    
+	if (nextNode) {
+        nextNode->prev = n;
+    } else {
+        last = n;
+    }
 	
 	size++;
-
+    
 }
 
 
@@ -118,7 +120,7 @@
 
 
 - (void)pushNodeBack:(LNode *)n {
-
+    
 	if (n->obj == nil) return;
 	
 	if (size == 0) {
@@ -136,7 +138,7 @@
 - (void)pushNodeFront:(LNode *)n {
 	
 	if (n->obj == nil) return;
-		
+    
 	if (size == 0) {
 		first = last = n;
 	} else {
@@ -241,16 +243,16 @@
 
 
 - (void)removeAllObjects {
-
+    
 	LNode *n = first;
-
+    
 	while (n) {
 		LNode *next = n->next;
 		[n->obj release];
 		free(n);
 		n = next;
 	}
-		
+    
 	first = last = nil;
 	size = 0;
 }
@@ -259,7 +261,7 @@
 - (void)dumpList {
     LNode *n = nil;
 	for (n = first; n; n=n->next) {
-		NSLog(@"0x%x", (int)n);
+		NSLog(@"0x%x", (long)n);
 	}	
 }
 
@@ -268,6 +270,14 @@
 	return size;
 }
 
+
+- (int)size {
+	return size;
+}
+
+- (int)length {
+	return size;
+}
 
 - (BOOL)containsObject:(id)anObject {
 	

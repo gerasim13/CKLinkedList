@@ -41,7 +41,6 @@ void test_init() {
  - (void)removeAllObjects;					// clear out the list
  - (void)dumpList;							// dumps all the pointers in the list to NSLog
  - (BOOL)containsObject:(id)anObject;		// (YES) if passed object is in the list, (NO) otherwise
- - (int)count;								// how many objects are stored
  - (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
  - (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
  */
@@ -58,11 +57,11 @@ void test_add_remove() {
     [list pushBack:str1];
     assert([list count] == 1);
     assert([list containsObject:str1]);
-
+    
     [list pushFront:str2];
     assert([list count] == 2);
     assert([list containsObject:str2]);
-
+    
     
     [list removeObjectEqualTo:str1];
     assert([list count] == 1);
@@ -77,51 +76,55 @@ void test_add_remove() {
         [list addObject:[NSString stringWithFormat:@"%d", i]];
     }
     
-
+    assert([list count] == [list size]);
+    assert([list count] == [list length]);
     assert([list count] == FILL_COUNT);
     
     id node = [list popFront];
     assert([list count] == FILL_COUNT-1);
     assert(node);
     assert([(NSString *)node isEqualToString:@"0"]);
-
     
-           
+    
+    
     node = [list popBack];
     assert([list count] == FILL_COUNT-2);
     assert(node);
     assert([(NSString *)node isEqualToString:@"99"]);
-
-    int c = [list count]
-
+    
+    int c = [list count];
+    
     for (i = 0; i < FILL_COUNT/2; i++) {
         id node = [list popBack];
+        BOOL success = [(NSString *)node isEqualToString:[NSString stringWithFormat:@"%d", c]];
         assert([list count] == --c);
-        
-        assert([(NSString *)node isEqualToString:[NSString stringWithFormat:@"%d", c]]);
-
+        assert([list count] == [list size]);
+        assert([list count] == [list length]);
+        assert(success);
     }
-
+    
     
     
     
 }
 
 /* Untested:
-- (void)removeNode:(LNode *)aNode;			// remove a given node
-- (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
-- (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
-- (void)insertObject:(id)anObject beforeNode:(LNode *)node;
-- (void)insertObject:(id)anObject afterNode:(LNode *)node;
-- (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
-- (void)prependObject:(id)anObject;
-- (void)appendObject:(id)anObject;
-*/
+ - (void)removeNode:(LNode *)aNode;			// remove a given node
+ - (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
+ - (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
+ - (void)insertObject:(id)anObject beforeNode:(LNode *)node;
+ - (void)insertObject:(id)anObject afterNode:(LNode *)node;
+ - (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
+ - (void)prependObject:(id)anObject;
+ - (void)appendObject:(id)anObject;
+ */
 
 
 int main(int argc, const char *argv[]) {
     
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    printf("---------- Begin NSLinkedList.m Tests ----------\n");
     
     
     test_init();
@@ -130,7 +133,7 @@ int main(int argc, const char *argv[]) {
     
     
     
-    printf("All tests passed\n");
+    printf("--------------- All tests passed ---------------\n");
     
     return 0;
 }
