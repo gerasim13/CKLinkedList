@@ -19,10 +19,14 @@ void test_init() {
     NSLinkedList *list1 = [[NSLinkedList alloc] init];
     assert(list1);
     assert([list1 count] == 0);
+    assert([list1 lastObject] == nil);
+    assert([list1 secondLastObject] == nil);
     
     NSLinkedList *list2 = [[NSLinkedList alloc] initWithObject:@"NSString"];
     assert(list2);
     assert([list2 count] == 1);
+    assert([list2 lastObject] != nil);
+    assert([list2 secondLastObject] == nil);
     
     
     
@@ -49,18 +53,24 @@ void test_add_remove() {
     NSLinkedList *list = [[NSLinkedList alloc] init];
     NSString *str1 = @"This is a test string";
     NSString *str2 = @"This is another test string";
-    NSString *str3 = @"This is a third test string";
+    //NSString *str3 = @"This is a third test string";
     
     assert(list);
     
+    assert([list lastObject] == nil);
+    assert([list secondLastObject] == nil);
     
     [list pushBack:str1];
     assert([list count] == 1);
     assert([list containsObject:str1]);
+    assert([list lastObject] != nil);
+    assert([list secondLastObject] == nil);
     
     [list pushFront:str2];
     assert([list count] == 2);
     assert([list containsObject:str2]);
+    assert([list lastObject] != nil);
+    assert([list secondLastObject] != nil);
     
     
     [list removeObjectEqualTo:str1];
@@ -134,6 +144,8 @@ int main(int argc, const char *argv[]) {
     
     
     printf("--------------- All tests passed ---------------\n");
+
+    [pool drain];
     
     return 0;
 }

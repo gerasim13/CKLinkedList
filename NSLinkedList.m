@@ -53,6 +53,35 @@
 }
 
 
+- (id)lastObject {
+
+    if (last) {
+        return last->obj;
+    }
+    
+    return nil;
+    
+}
+
+
+- (id)secondLastObject {
+    
+    if (last) {
+        if (last->prev) {
+            return last->prev->obj;
+        }
+    }
+    
+    return nil;
+    
+}
+
+
+- (id)top {
+    return [self lastObject];
+}
+
+
 - (void)pushFront:(id)anObject {
 	
 	if (anObject == nil) return;

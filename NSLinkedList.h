@@ -46,6 +46,10 @@ struct LNode {
 - (void)pushNodeBack:(LNode *)n;			// adds a node object to the end of the list
 - (void)pushNodeFront:(LNode *)n;			// adds a node object to the beginning of the list
 
+- (id)lastObject;
+- (id)secondLastObject;
+- (id)top;
+
 // Insert objects
 - (void)insertObject:(id)anObject beforeNode:(LNode *)node;
 - (void)insertObject:(id)anObject afterNode:(LNode *)node;
