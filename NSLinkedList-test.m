@@ -120,15 +120,13 @@ void test_add_remove() {
     
     LNode *i = nil;
     int count = [list count];
-    for (i = [list firstNode]; i->next; i=i->next) {
+    for (i = [list firstNode]; i; i=i->next) {
         assert(i);
-        if (--count == -10) {
+        if (count-- == 0) {
             assert(0); // infinite loop, nslinkedlist error
         }
     }
 
-    
-    
     assert([list count] == 48);    
     LNode *firstNode = [list firstNode];
     LNode *lastNode = [list lastNode];
@@ -177,32 +175,31 @@ void test_add_remove() {
     [list pushNodeFront:newnode1];
     assert([list length] == 7);
     [list pushNodeFront:newnode1];
-//    assert([list length] == 8);
-////    [list pushNodeFront:newnode1];
-////    assert([list length] == 9);
-////    [list pushNodeFront:newnode1];
-////    assert([list length] == 10);
-////    
-////    assert([list count] == 10);
+    assert([list length] == 8);
+    [list pushNodeFront:newnode1];
+    assert([list length] == 9);
+    [list pushNodeFront:newnode1];
+    assert([list length] == 10);
 
-
+    assert([list count] == 10);
     count = [list count];
-    for (i = [list firstNode]; i->next; i=i->next) {
+    for (i = [list firstNode]; i; i=i->next) {
         assert(i);
-        NSLog(@"%@", i->obj);
-        if (--count == 0) {
+        // NSLog(@"%@", i->obj);
+        if (count-- == 0) {
             assert(0); // infinite loop, nslinkedlist error
         }
+        if (count == 0) assert([list lastNode] == i);
     }
+
     
 }
 
 /* Untested:
- - (void)pushNodeBack:(LNode *)n;           // adds a node object to the end of the list
- - (void)pushNodeFront:(LNode *)n;          // adds a node object to the beginning of the list
  - (void)insertObject:(id)anObject beforeNode:(LNode *)node;
  - (void)insertObject:(id)anObject afterNode:(LNode *)node;
  - (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
+ - (void)insertObject:(id)anObject orderedPositionByKey:(NSString *)key ascending:(BOOL)ascending;
  */
 
 
