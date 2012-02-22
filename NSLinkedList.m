@@ -310,34 +310,24 @@
 }
 
 
-/*
+
 - (void)dumpList {
     LNode *n = nil;
     for (n = first; n; n=n->next) {
-        NSLog(@"0x%x", (unsigned)n);
+        NSLog(@"%p", n);
     }   
 }
-*/
+
 
 
 - (void)insertObject:(id)anObject orderedPositionByKey:(NSString *)key ascending:(BOOL)ascending {
-    assert(0);
+    assert(0); // currently not implemented
 }
 
 
-- (int)count {
-    return size;
-}
-
-
-- (int)size {
-    return size;
-}
-
-
-- (int)length {
-    return size;
-}
+- (int)count  { return size; }
+- (int)size   { return size; }
+- (int)length { return size; }
 
 
 - (BOOL)containsObject:(id)anObject {
@@ -350,6 +340,19 @@
     
     return NO;
     
+}
+
+
+- (NSArray *)allObjects {
+
+    NSMutableArray *ret = [NSMutableArray new];
+    LNode *n = nil;
+    
+    for (n = first; n; n=n->next) {
+        [ret addObject:n->obj];
+    }
+
+    return [ret autorelease];
 }
 
 

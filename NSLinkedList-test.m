@@ -53,7 +53,6 @@ void test_add_remove() {
     NSLinkedList *list = [[NSLinkedList alloc] init];
     NSString *str1 = @"This is a test string";
     NSString *str2 = @"This is another test string";
-    //NSString *str3 = @"This is a third test string";
     
     assert(list);
     
@@ -61,7 +60,7 @@ void test_add_remove() {
     assert([list lastNode] == nil);
     assert([list lastObject] == nil);
     assert([list secondLastObject] == nil);
-    
+
     [list pushBack:str1];
     assert([list count] == 1);
     assert([list containsObject:str1]);
@@ -73,11 +72,16 @@ void test_add_remove() {
     assert([list containsObject:str2]);
     assert([list lastObject] != nil);
     assert([list secondLastObject] != nil);
-    
+    assert([[list allObjects] count] == [list count]);
+    assert([[list allObjects] lastObject] == [list lastObject]);
+
     
     [list removeObjectEqualTo:str1];
     assert([list count] == 1);
     assert(![list containsObject:str1]);
+    assert([[list allObjects] count] == [list count]);
+    assert([[list allObjects] lastObject] == [list lastObject]);
+
     
     [list removeAllObjects];
     assert([list count] == 0);
@@ -85,8 +89,10 @@ void test_add_remove() {
     const int FILL_COUNT = 100;
     
     for (i = 0; i < FILL_COUNT; i++) {
+        assert([[list allObjects] count] == [list count]);
         [list addObject:[NSString stringWithFormat:@"%d", i]];
     }
+    assert([[list allObjects] count] == [list count]);
     
     assert([list count] == [list size]);
     assert([list count] == [list length]);
@@ -97,10 +103,15 @@ void test_add_remove() {
     assert(node);
     assert([(NSString *)node isEqualToString:@"0"]);
     
+    assert([[list allObjects] lastObject] == [list lastObject]);
+
+    assert([[list allObjects] count] == [list count]);
     
     assert([list firstNode]->obj == [list firstObject]);
     assert([list lastNode]->obj == [list lastObject]);
     
+    assert([[list allObjects] count] == [list count]);
+assert([[list allObjects] lastObject] == [list lastObject]);
     
     node = [list popBack];
     assert([list count] == FILL_COUNT-2);
@@ -116,6 +127,7 @@ void test_add_remove() {
         assert([list count] == [list size]);
         assert([list count] == [list length]);
         assert(success);
+        assert([[list allObjects] lastObject] == [list lastObject]);
     }
     
     LNode *i = nil;
@@ -126,6 +138,8 @@ void test_add_remove() {
             assert(0); // infinite loop, nslinkedlist error
         }
     }
+    assert([[list allObjects] count] == [list count]);
+    
 
     assert([list count] == 48);    
     LNode *firstNode = [list firstNode];
@@ -142,19 +156,24 @@ void test_add_remove() {
 
     while ([list count]) {
         [list removeNode:[list firstNode]];
+        assert([[list allObjects] lastObject] == [list lastObject]);
     }
     
+    assert([[list allObjects] count] == [list count]);
     assert([list count] == 0);
     [list removeAllObjects];
     assert([list count] == 0);
+    assert([[list allObjects] lastObject] == [list lastObject]);
 
-    
     [list prependObject:@"test"];
     [list appendObject:@"test2"];
 
     assert([list length] == 2);
     assert([[list firstObject] isEqualToString:@"test"]);
     assert([[list lastObject] isEqualToString:@"test2"]);
+    assert([[list allObjects] count] == [list count]);
+    assert([[list allObjects] lastObject] == [list lastObject]);
+
     
     firstNode = [list firstNode];
     lastNode = [list lastNode];
@@ -162,7 +181,8 @@ void test_add_remove() {
     LNode *newnode1 = LNodeMake(@"newnode1", nil, nil);
     LNode *newnode2 = LNodeMake(@"newnode2", nil, nil);
     
-
+    assert([[list allObjects] count] == [list count]);
+    
     [list pushNodeBack:newnode2];
     assert([list length] == 3);
     [list pushNodeBack:newnode2];
@@ -171,6 +191,7 @@ void test_add_remove() {
     assert([list length] == 5);
     [list pushNodeBack:newnode2];
     assert([list length] == 6);
+    assert([[list allObjects] lastObject] == [list lastObject]);
 
     [list pushNodeFront:newnode1];
     assert([list length] == 7);
@@ -180,6 +201,7 @@ void test_add_remove() {
     assert([list length] == 9);
     [list pushNodeFront:newnode1];
     assert([list length] == 10);
+    assert([[list allObjects] lastObject] == [list lastObject]);
 
     assert([list count] == 10);
     count = [list count];

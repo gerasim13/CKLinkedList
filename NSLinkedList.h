@@ -37,7 +37,7 @@ struct LNode {
 - (id)popFront;                             // remove object at front of list (returns it)
 - (BOOL)removeObjectEqualTo:(id)anObject;   // removes object equal to anObject, returns (YES) on success
 - (void)removeAllObjects;                   // clear out the list
-// - (void)dumpList;                           // dumps all the pointers in the list to NSLog
+- (void)dumpList;                           // dumps all the pointers in the list to NSLog
 - (BOOL)containsObject:(id)anObject;        // (YES) if passed object is in the list, (NO) otherwise
 - (int)count;                               // how many objects are stored
 - (int)size;                                // how many objects are stored
@@ -53,6 +53,8 @@ struct LNode {
 
 - (LNode *)firstNode;
 - (LNode *)lastNode;
+
+- (NSArray *)allObjects;
 
 
 // Insert objects
