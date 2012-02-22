@@ -45,6 +45,8 @@ void test_init() {
  - (BOOL)containsObject:(id)anObject;       // (YES) if passed object is in the list, (NO) otherwise
  - (void)pushNodeBack:(LNode *)n;           // adds a node object to the end of the list
  - (void)pushNodeFront:(LNode *)n;          // adds a node object to the beginning of the list
+ - (void)prependObject:(id)anObject;
+ - (void)appendObject:(id)anObject;
  */
 void test_add_remove() {
     
@@ -55,6 +57,8 @@ void test_add_remove() {
     
     assert(list);
     
+    assert([list firstNode] == nil);
+    assert([list lastNode] == nil);
     assert([list lastObject] == nil);
     assert([list secondLastObject] == nil);
     
@@ -94,6 +98,9 @@ void test_add_remove() {
     assert([(NSString *)node isEqualToString:@"0"]);
     
     
+    assert([list firstNode]->obj == [list firstObject]);
+    assert([list lastNode]->obj == [list lastObject]);
+    
     
     node = [list popBack];
     assert([list count] == FILL_COUNT-2);
@@ -111,20 +118,91 @@ void test_add_remove() {
         assert(success);
     }
     
+    LNode *i = nil;
+    int count = [list count];
+    for (i = [list firstNode]; i->next; i=i->next) {
+        assert(i);
+        if (--count == -10) {
+            assert(0); // infinite loop, nslinkedlist error
+        }
+    }
+
     
     
+    assert([list count] == 48);    
+    LNode *firstNode = [list firstNode];
+    LNode *lastNode = [list lastNode];
+    assert(firstNode);
+    assert(lastNode);
+    [list removeNode:firstNode];
+    assert([list firstNode] != firstNode);
+    assert([list count] == 47);
+
+    [list removeNode:lastNode];
+    assert([list lastNode] != lastNode);
+    assert([list count] == 46);
+
+    while ([list count]) {
+        [list removeNode:[list firstNode]];
+    }
+    
+    assert([list count] == 0);
+    [list removeAllObjects];
+    assert([list count] == 0);
+
+    
+    [list prependObject:@"test"];
+    [list appendObject:@"test2"];
+
+    assert([list length] == 2);
+    assert([[list firstObject] isEqualToString:@"test"]);
+    assert([[list lastObject] isEqualToString:@"test2"]);
+    
+    firstNode = [list firstNode];
+    lastNode = [list lastNode];
+
+    LNode *newnode1 = LNodeMake(@"newnode1", nil, nil);
+    LNode *newnode2 = LNodeMake(@"newnode2", nil, nil);
+    
+
+    [list pushNodeBack:newnode2];
+    assert([list length] == 3);
+    [list pushNodeBack:newnode2];
+    assert([list length] == 4);
+    [list pushNodeBack:newnode2];
+    assert([list length] == 5);
+    [list pushNodeBack:newnode2];
+    assert([list length] == 6);
+
+    [list pushNodeFront:newnode1];
+    assert([list length] == 7);
+    [list pushNodeFront:newnode1];
+//    assert([list length] == 8);
+////    [list pushNodeFront:newnode1];
+////    assert([list length] == 9);
+////    [list pushNodeFront:newnode1];
+////    assert([list length] == 10);
+////    
+////    assert([list count] == 10);
+
+
+    count = [list count];
+    for (i = [list firstNode]; i->next; i=i->next) {
+        assert(i);
+        NSLog(@"%@", i->obj);
+        if (--count == 0) {
+            assert(0); // infinite loop, nslinkedlist error
+        }
+    }
     
 }
 
 /* Untested:
- - (void)removeNode:(LNode *)aNode;         // remove a given node
  - (void)pushNodeBack:(LNode *)n;           // adds a node object to the end of the list
  - (void)pushNodeFront:(LNode *)n;          // adds a node object to the beginning of the list
  - (void)insertObject:(id)anObject beforeNode:(LNode *)node;
  - (void)insertObject:(id)anObject afterNode:(LNode *)node;
  - (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
- - (void)prependObject:(id)anObject;
- - (void)appendObject:(id)anObject;
  */
 
 

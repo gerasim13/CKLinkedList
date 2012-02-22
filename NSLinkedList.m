@@ -64,6 +64,31 @@
 }
 
 
+- (id)firstObject {
+    
+    if (first) {
+        return first->obj;
+    }
+    
+    return nil;
+    
+}
+
+
+- (LNode *)firstNode {
+    
+    return first;
+    
+}
+
+
+- (LNode *)lastNode {
+    
+    return last;
+    
+}
+
+
 - (id)secondLastObject {
     
     if (last) {
@@ -111,11 +136,13 @@
 
 
 - (void)insertObject:(id)anObject beforeNode:(LNode *)node {
+
     [self insertObject:anObject betweenNode:node->prev andNode:node];
 }
 
 
 - (void)insertObject:(id)anObject afterNode:(LNode *)node {
+    
     [self insertObject:anObject betweenNode:node andNode:node->next];
 }
 
@@ -150,13 +177,11 @@
 
 - (void)pushNodeBack:(LNode *)n {
     
-    if (n->obj == nil) return;
-    
     if (size == 0) {
-        first = last = n;
+        first = last = LNodeMake(n->obj, nil, nil);
     } else {
-        last->next = n;
-        last = n;
+        last->next = LNodeMake(n->obj, nil, last);
+        last = last->next;
     }
     
     size++;
@@ -166,13 +191,11 @@
 
 - (void)pushNodeFront:(LNode *)n {
     
-    if (n->obj == nil) return;
-    
     if (size == 0) {
-        first = last = n;
+        first = last = LNodeMake(n->obj, nil, nil);
     } else {
-        first->prev = n;
-        first = n;
+        first->prev = LNodeMake(n->obj, first, nil);
+        first = first->prev;
     }
     
     size++; 
@@ -287,11 +310,18 @@
 }
 
 
+/*
 - (void)dumpList {
     LNode *n = nil;
     for (n = first; n; n=n->next) {
-        NSLog(@"0x%x", (long)n);
+        NSLog(@"0x%x", (unsigned)n);
     }   
+}
+*/
+
+
+- (void)insertObject:(id)anObject orderedPositionByKey:(NSString *)key ascending:(BOOL)ascending {
+    assert(0);
 }
 
 
@@ -304,9 +334,11 @@
     return size;
 }
 
+
 - (int)length {
     return size;
 }
+
 
 - (BOOL)containsObject:(id)anObject {
     
@@ -327,6 +359,11 @@
 }
 
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"NSLinkedList with %d objects", size];
+}
+
+
 @end
 
 LNode * LNodeMake(id obj, LNode *next, LNode *prev) {
@@ -336,5 +373,6 @@ LNode * LNodeMake(id obj, LNode *next, LNode *prev) {
     n->obj = [obj retain];
     return n;
 };
+
 
 

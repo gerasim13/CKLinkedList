@@ -35,25 +35,32 @@ struct LNode {
 - (void)addObject:(id)anObject;             // same as pushBack
 - (id)popBack;                              // remove object at end of list (returns it)
 - (id)popFront;                             // remove object at front of list (returns it)
-- (void)removeNode:(LNode *)aNode;          // remove a given node
 - (BOOL)removeObjectEqualTo:(id)anObject;   // removes object equal to anObject, returns (YES) on success
 - (void)removeAllObjects;                   // clear out the list
-- (void)dumpList;                           // dumps all the pointers in the list to NSLog
+// - (void)dumpList;                           // dumps all the pointers in the list to NSLog
 - (BOOL)containsObject:(id)anObject;        // (YES) if passed object is in the list, (NO) otherwise
 - (int)count;                               // how many objects are stored
 - (int)size;                                // how many objects are stored
 - (int)length;                              // how many objects are stored
 - (void)pushNodeBack:(LNode *)n;            // adds a node object to the end of the list
 - (void)pushNodeFront:(LNode *)n;           // adds a node object to the beginning of the list
+- (void)removeNode:(LNode *)aNode;          // remove a given node
 
 - (id)lastObject;
+- (id)firstObject;
 - (id)secondLastObject;
 - (id)top;
+
+- (LNode *)firstNode;
+- (LNode *)lastNode;
+
 
 // Insert objects
 - (void)insertObject:(id)anObject beforeNode:(LNode *)node;
 - (void)insertObject:(id)anObject afterNode:(LNode *)node;
 - (void)insertObject:(id)anObject betweenNode:(LNode *)previousNode andNode:(LNode *)nextNode;
+
+- (void)insertObject:(id)anObject orderedPositionByKey:(NSString *)key ascending:(BOOL)ascending;
 
 // Prepend/append - simple references to keep my sanity
 - (void)prependObject:(id)anObject;
