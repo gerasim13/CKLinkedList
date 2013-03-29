@@ -2,10 +2,17 @@
 // NSLinkedList Tests
 //
 // test with:
-// make test
+//      make test
+//
+//  V1.3
+//
 
 #import <assert.h>
 #import "NSLinkedList.h"
+
+#if __has_feature(objc_arc)
+#error "This source file must NOT be compiled with ARC. Use -fno-objc-arc compile flag to disable ARC for NSLinkedList"
+#endif
 
 static int i;
 
@@ -15,13 +22,13 @@ static int i;
  - (id)initWithObject:(id)anObject;         // init the linked list with a single object
  */
 void test_init() {
-    
+
     NSLinkedList *list1 = [[NSLinkedList alloc] init];
     assert(list1);
     assert([list1 count] == 0);
     assert([list1 lastObject] == nil);
     assert([list1 secondLastObject] == nil);
-    
+
     NSLinkedList *list2 = [[NSLinkedList alloc] initWithObject:@"NSString"];
     assert(list2);
     assert([list2 count] == 1);
@@ -49,13 +56,13 @@ void test_init() {
  - (void)appendObject:(id)anObject;
  */
 void test_add_remove() {
-    
+
     NSLinkedList *list = [[NSLinkedList alloc] init];
     NSString *str1 = @"This is a test string";
     NSString *str2 = @"This is another test string";
-    
+
     assert(list);
-    
+
     assert([list firstNode] == nil);
     assert([list lastNode] == nil);
     assert([list lastObject] == nil);
@@ -66,7 +73,7 @@ void test_add_remove() {
     assert([list containsObject:str1]);
     assert([list lastObject] != nil);
     assert([list secondLastObject] == nil);
-    
+
     [list pushFront:str2];
     assert([list count] == 2);
     assert([list containsObject:str2]);
@@ -75,51 +82,51 @@ void test_add_remove() {
     assert([[list allObjects] count] == [list count]);
     assert([[list allObjects] lastObject] == [list lastObject]);
 
-    
+
     [list removeObjectEqualTo:str1];
     assert([list count] == 1);
     assert(![list containsObject:str1]);
     assert([[list allObjects] count] == [list count]);
     assert([[list allObjects] lastObject] == [list lastObject]);
 
-    
+
     [list removeAllObjects];
     assert([list count] == 0);
-    
+
     const int FILL_COUNT = 100;
-    
+
     for (i = 0; i < FILL_COUNT; i++) {
         assert([[list allObjects] count] == [list count]);
         [list addObject:[NSString stringWithFormat:@"%d", i]];
     }
     assert([[list allObjects] count] == [list count]);
-    
+
     assert([list count] == [list size]);
     assert([list count] == [list length]);
     assert([list count] == FILL_COUNT);
-    
+
     id node = [list popFront];
     assert([list count] == FILL_COUNT-1);
     assert(node);
     assert([(NSString *)node isEqualToString:@"0"]);
-    
+
     assert([[list allObjects] lastObject] == [list lastObject]);
 
     assert([[list allObjects] count] == [list count]);
-    
+
     assert([list firstNode]->obj == [list firstObject]);
     assert([list lastNode]->obj == [list lastObject]);
-    
+
     assert([[list allObjects] count] == [list count]);
-assert([[list allObjects] lastObject] == [list lastObject]);
-    
+    assert([[list allObjects] lastObject] == [list lastObject]);
+
     node = [list popBack];
     assert([list count] == FILL_COUNT-2);
     assert(node);
     assert([(NSString *)node isEqualToString:@"99"]);
-    
+
     int c = [list count];
-    
+
     for (i = 0; i < FILL_COUNT/2; i++) {
         id node = [list popBack];
         BOOL success = [(NSString *)node isEqualToString:[NSString stringWithFormat:@"%d", c]];
@@ -129,7 +136,7 @@ assert([[list allObjects] lastObject] == [list lastObject]);
         assert(success);
         assert([[list allObjects] lastObject] == [list lastObject]);
     }
-    
+
     LNode *i = nil;
     int count = [list count];
     for (i = [list firstNode]; i; i=i->next) {
@@ -139,9 +146,9 @@ assert([[list allObjects] lastObject] == [list lastObject]);
         }
     }
     assert([[list allObjects] count] == [list count]);
-    
 
-    assert([list count] == 48);    
+
+    assert([list count] == 48);
     LNode *firstNode = [list firstNode];
     LNode *lastNode = [list lastNode];
     assert(firstNode);
@@ -158,7 +165,7 @@ assert([[list allObjects] lastObject] == [list lastObject]);
         [list removeNode:[list firstNode]];
         assert([[list allObjects] lastObject] == [list lastObject]);
     }
-    
+
     assert([[list allObjects] count] == [list count]);
     assert([list count] == 0);
     [list removeAllObjects];
@@ -174,15 +181,15 @@ assert([[list allObjects] lastObject] == [list lastObject]);
     assert([[list allObjects] count] == [list count]);
     assert([[list allObjects] lastObject] == [list lastObject]);
 
-    
+
     firstNode = [list firstNode];
     lastNode = [list lastNode];
 
     LNode *newnode1 = LNodeMake(@"newnode1", nil, nil);
     LNode *newnode2 = LNodeMake(@"newnode2", nil, nil);
-    
+
     assert([[list allObjects] count] == [list count]);
-    
+
     [list pushNodeBack:newnode2];
     assert([list length] == 3);
     [list pushNodeBack:newnode2];
@@ -214,7 +221,7 @@ assert([[list allObjects] lastObject] == [list lastObject]);
         if (count == 0) assert([list lastNode] == i);
     }
 
-    
+
 }
 
 /* Untested:
@@ -226,21 +233,21 @@ assert([[list allObjects] lastObject] == [list lastObject]);
 
 
 int main(int argc, const char *argv[]) {
-    
+
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    
-    printf("---------- Begin NSLinkedList.m Tests ----------\n");
-    
-    
+
+    printf("Running NSLinkedList.m Test Suite...\n");
+
+
     test_init();
     test_add_remove();
-    
-    
-    
-    
-    printf("--------------- All tests passed ---------------\n");
+
+
+
+
+    printf("86 tests passed successfully\n");
 
     [pool drain];
-    
+
     return 0;
 }

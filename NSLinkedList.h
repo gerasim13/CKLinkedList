@@ -1,14 +1,17 @@
 //
 //  NSLinkedList.h
-//  Quarantine
 //
 //  Created by Matt Schettler on 5/30/10.
-//  Copyright 2010 mschettler@gmail.com. All rights reserved.
+//  Copyright 2010-2013 mschettler@gmail.com. All rights reserved.
 //
-//  V1.2
+//  V1.3
 //
 
 #import <Foundation/Foundation.h>
+
+#if __has_feature(objc_arc)
+#error "This source file must NOT be compiled with ARC. Use -fno-objc-arc compile flag to disable ARC for NSLinkedList"
+#endif
 
 typedef struct LNode LNode;
 
@@ -20,12 +23,12 @@ struct LNode {
 
 
 @interface NSLinkedList : NSObject {
-    
+
     LNode *first;
     LNode *last;
-    
+
     unsigned int size;
-    
+
 }
 
 - (id)init;                                 // init an empty list
