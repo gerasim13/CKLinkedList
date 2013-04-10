@@ -247,7 +247,7 @@ void test_add_remove() {
     assert([[another objectAtIndex:4] isEqualToString:@"test5"]);
     assert([[another objectAtIndex:1] isEqualToString:@"test2"]);
 
-
+    assert([another objectAtIndex:-1] == nil);
 
 
 

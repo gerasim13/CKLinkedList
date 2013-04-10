@@ -61,24 +61,12 @@
 
 
 - (id)lastObject {
-
-    if (last) {
-        return last->obj;
-    }
-
-    return nil;
-
+    return last ? last->obj : nil;
 }
 
 
 - (id)firstObject {
-
-    if (first) {
-        return first->obj;
-    }
-
-    return nil;
-
+    return first ? first->obj : nil;
 }
 
 
@@ -203,14 +191,14 @@
 }
 
 
+// fixme, add support for negative indexing
 - (id)objectAtIndex:(const int)idx {
 
-    // we don't have this many objects
-    if (idx >= size) return nil;
+    if (idx >= size || idx < 0) return nil;
 
     LNode *n = nil;
 
-    if (idx > size / 2) {
+    if (idx > (size / 2)) {
         // loop from the back
         int curridx = size - 1;
         for (n = last; idx < curridx; --curridx) n = n->prev;
@@ -231,20 +219,9 @@
 
     if (size == 0) return nil;
 
-    id ret = last->obj;
-    LNode *mem = last;
-
-    if (size == 1) {
-        first = last = nil;
-    } else {
-        last = last->prev;
-        last->next = nil;
-    }
-
-    [mem->obj release];
-    free(mem);
-    size--;
-    return ret;
+    id ret = [last->obj retain];
+    [self removeNode:last];
+    return [ret autorelease];
 
 }
 
@@ -253,20 +230,9 @@
 
     if (size == 0) return nil;
 
-    id ret = first->obj;
-    LNode *mem = first;
-
-    if (size == 1) {
-        first = last = nil;
-    } else {
-        first = first->next;
-        first->prev = nil;
-    }
-
-    [mem->obj release];
-    free(mem);
-    size--;
-    return ret;
+    id ret = [first->obj retain];
+    [self removeNode:first];
+    return [ret autorelease];
 
 }
 
@@ -308,7 +274,6 @@
 
     for (n = first; n; n=n->next) {
         if (n->obj == anObject) {
-            [n->obj release];
             [self removeNode:n];
             return YES;
         }
@@ -335,14 +300,12 @@
 }
 
 
-
 - (void)dumpList {
     LNode *n = nil;
     for (n = first; n; n=n->next) {
         NSLog(@"%p", n);
     }
 }
-
 
 
 - (void)insertObject:(id)anObject orderedPositionByKey:(NSString *)key ascending:(BOOL)ascending {
@@ -370,14 +333,14 @@
 
 - (NSArray *)allObjects {
 
-    NSMutableArray *ret = [[NSMutableArray alloc] initWithCapacity:size];
+    NSMutableArray *ret = [[[NSMutableArray alloc] initWithCapacity:size] autorelease];
     LNode *n = nil;
 
     for (n = first; n; n=n->next) {
         [ret addObject:n->obj];
     }
 
-    return [ret autorelease];
+    return [NSArray arrayWithArray:ret];
 }
 
 
