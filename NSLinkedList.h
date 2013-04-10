@@ -4,7 +4,7 @@
 //  Created by Matt Schettler on 5/30/10.
 //  Copyright 2010-2013 mschettler@gmail.com. All rights reserved.
 //
-//  V1.3
+//  V1.4
 //
 
 #import <Foundation/Foundation.h>
@@ -49,6 +49,8 @@ struct LNode {
 - (void)pushNodeFront:(LNode *)n;           // adds a node object to the beginning of the list
 - (void)removeNode:(LNode *)aNode;          // remove a given node
 
+
+- (id)objectAtIndex:(const int)idx;
 - (id)lastObject;
 - (id)firstObject;
 - (id)secondLastObject;

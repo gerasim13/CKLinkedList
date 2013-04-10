@@ -4,7 +4,7 @@
 // test with:
 //      make test
 //
-//  V1.3
+//  V1.4
 //
 
 #import <assert.h>
@@ -222,6 +222,35 @@ void test_add_remove() {
     }
 
 
+    NSLinkedList *another = [[NSLinkedList alloc] initWithObject:@"test1"];
+
+    assert(another.count == 1);
+
+    NSLinkedList *foo = [[NSLinkedList alloc] initWithObject:another];
+    assert(foo.count == 1);
+
+    assert([[foo allObjects] count] == 1);
+
+    assert([[another objectAtIndex:0] isEqualToString:@"test1"]);
+
+    [another pushBack:@"test2"];
+    [another pushBack:@"test3"];
+    [another pushBack:@"test4"];
+    [another pushBack:@"test5"];
+    [another pushBack:@"test6"];
+    [another pushBack:@"test7"];
+    [another pushBack:@"test8"];
+
+    assert([[another objectAtIndex:7] isEqualToString:@"test8"]);
+    assert([[another objectAtIndex:6] isEqualToString:@"test7"]);
+    assert([[another objectAtIndex:5] isEqualToString:@"test6"]);
+    assert([[another objectAtIndex:4] isEqualToString:@"test5"]);
+    assert([[another objectAtIndex:1] isEqualToString:@"test2"]);
+
+
+
+
+
 }
 
 /* Untested:
@@ -245,7 +274,7 @@ int main(int argc, const char *argv[]) {
 
 
 
-    printf("86 tests passed successfully\n");
+    printf("All tests passed successfully\n");
 
     [pool drain];
 

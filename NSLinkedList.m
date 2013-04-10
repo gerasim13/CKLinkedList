@@ -4,7 +4,7 @@
 //  Created by Matt Schettler on 5/30/10.
 //  Copyright 2010-2013 mschettler@gmail.com. All rights reserved.
 //
-//  V1.3
+//  V1.4
 //
 
 
@@ -16,6 +16,7 @@
 
 @implementation NSLinkedList
 @synthesize first, last;
+
 
 - (id)init {
 
@@ -81,30 +82,24 @@
 }
 
 
-- (LNode *)firstNode {
-
-    return first;
-
-}
-
-
-- (LNode *)lastNode {
-
-    return last;
-
-}
-
-
 - (id)secondLastObject {
 
-    if (last) {
-        if (last->prev) {
-            return last->prev->obj;
-        }
+    if (last && last->prev) {
+        return last->prev->obj;
     }
 
     return nil;
 
+}
+
+
+- (LNode *)firstNode {
+    return first;
+}
+
+
+- (LNode *)lastNode {
+    return last;
 }
 
 
@@ -208,6 +203,30 @@
 }
 
 
+- (id)objectAtIndex:(const int)idx {
+
+    // we don't have this many objects
+    if (idx >= size) return nil;
+
+    LNode *n = nil;
+
+    if (idx > size / 2) {
+        // loop from the back
+        int curridx = size - 1;
+        for (n = last; idx < curridx; --curridx) n = n->prev;
+        return n->obj;
+    } else {
+        // loop from the front
+        int curridx = 0;
+        for (n = first; curridx < idx; ++curridx) n = n->next;
+        return n->obj;
+    }
+
+    return nil;
+
+}
+
+
 - (id)popBack {
 
     if (size == 0) return nil;
@@ -216,10 +235,10 @@
     LNode *mem = last;
 
     if (size == 1) {
-        first = last = NULL;
+        first = last = nil;
     } else {
         last = last->prev;
-        last->next = NULL;
+        last->next = nil;
     }
 
     [mem->obj release];
@@ -351,7 +370,7 @@
 
 - (NSArray *)allObjects {
 
-    NSMutableArray *ret = [NSMutableArray new];
+    NSMutableArray *ret = [[NSMutableArray alloc] initWithCapacity:size];
     LNode *n = nil;
 
     for (n = first; n; n=n->next) {
