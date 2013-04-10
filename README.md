@@ -1,14 +1,20 @@
-###A Simple Doubly linked list for Objective-C
-* Linked Lists support efficient insertion/removal from anywhere in the list, whereas arrays are only efficient adding/removing to the end
-* http://en.wikipedia.org/wiki/Linked_list
+###A *Doubly* linked list for Objective-C
 
 > "The principal benefit of a linked list over a conventional array is that the order of the linked items may be different from the order that the data items are stored in memory or on disk. For that reason, linked lists allow insertion and removal of nodes at any point in the list, with a constant number of operations.
-On the other hand, linked lists by themselves do not allow random access to the data, or any form of efficient indexing. Thus, many basic operations — such as obtaining the last node of the list, or finding a node that contains a given datum, or locating the place where a new node should be inserted — may require scanning most of the list elements."
+On the other hand, linked lists by themselves do not allow random access to the data, or any form of efficient indexing. "
+
+* [Wikipedia - Linked List](http://en.wikipedia.org/wiki/Linked_list)
 
 ###Installation 
 
-1. Add `NSLinkedList.h` and `NSLinkedList.m` to your project
-1. Add `#import "NSLinkedList.h"` to your project's `.pch` file
+1. Add `NSLinkedList.h` and `NSLinkedList.m` to your project, for example in your `3rdparty` directory
+2. Add `#import "NSLinkedList.h"` to your project's `.pch` file
+3. NSLinkedList class is now avaiable anywhere in your project, enjoy!
+
+###Benefits vs. NSArray
+* Efficient insertion and removal of elements at any index
+* Efficient memory allocation (No need to resize/reallocate memory)
+
 
 ###Example Usage
 
