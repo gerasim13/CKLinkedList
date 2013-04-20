@@ -191,10 +191,16 @@
 }
 
 
-// fixme, add support for negative indexing
-- (id)objectAtIndex:(const int)idx {
+// fixme, add support for negative indexing, even NSArray doesnt have that :)
+- (id)objectAtIndex:(const int)inidx {
 
-    if (idx >= size || idx < 0) return nil;
+    int idx = inidx;
+
+    // they've given us a negative index
+    // we just need to convert it positive
+    if (inidx < 0) idx = size + inidx;
+
+    if (idx >= size) return nil;
 
     LNode *n = nil;
 

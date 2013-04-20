@@ -210,7 +210,14 @@ void test_add_remove() {
     assert([list length] == 10);
     assert([[list allObjects] lastObject] == [list lastObject]);
 
-    assert([list count] == 10);
+    // lets test negative indexes
+    assert(list.count == 10);
+    assert([list objectAtIndex:-99999] == nil);
+    assert([list objectAtIndex:-1] == [list lastObject]);
+    assert([list objectAtIndex:-2] == [list secondLastObject]);
+    assert([list objectAtIndex:-(list.count - 1)] == [list firstObject]);
+
+
     count = [list count];
     for (i = [list firstNode]; i; i=i->next) {
         assert(i);
@@ -247,7 +254,15 @@ void test_add_remove() {
     assert([[another objectAtIndex:4] isEqualToString:@"test5"]);
     assert([[another objectAtIndex:1] isEqualToString:@"test2"]);
 
-    assert([another objectAtIndex:-1] == nil);
+    // more negative indexing testing
+    assert([another objectAtIndex:-1] == [another objectAtIndex:7]);
+    assert([another objectAtIndex:-2] == [another objectAtIndex:6]);
+    assert([another objectAtIndex:-3] == [another objectAtIndex:5]);
+    assert([another objectAtIndex:-4] == [another objectAtIndex:4]);
+    assert([another objectAtIndex:-5] == [another objectAtIndex:3]);
+    assert([another objectAtIndex:-6] == [another objectAtIndex:2]);
+    assert([another objectAtIndex:-7] == [another objectAtIndex:1]);
+    assert([another objectAtIndex:-8] == [another objectAtIndex:0]);
 
 
 
