@@ -197,10 +197,8 @@
 }
 
 
-// With support for negative indexing
+// With support for negative indexing!
 - (id)objectAtIndex:(const int)inidx {
-
-    // NSLog(@"objectAtIndex %d", inidx);
 
     int idx = inidx;
 
@@ -208,9 +206,7 @@
     // we just need to convert it positive
     if (inidx < 0) idx = size + inidx;
 
-    // NSLog(@"\tobjectAtIndex %d", idx);
-
-    if (idx >= size || idx < 0 || size == 0) return nil;
+    if (idx >= size || idx < 0) return nil;
 
     LNode *n = nil;
 
