@@ -32,6 +32,7 @@ struct LNode {
 }
 
 - (id)init;                                 // init an empty list
++ (id)listWithObject:(id)anObject;          // init the linked list with a single object
 - (id)initWithObject:(id)anObject;          // init the linked list with a single object
 - (void)pushBack:(id)anObject;              // add an object to back of list
 - (void)pushFront:(id)anObject;             // add an object to front of list

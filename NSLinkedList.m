@@ -29,6 +29,12 @@
 }
 
 
++ (id)listWithObject:(id)anObject {
+    NSLinkedList *n = [[[NSLinkedList alloc] initWithObject:anObject] autorelease];
+    return n;
+}
+
+
 - (id)initWithObject:(id)anObject {
 
     if ((self = [super init]) == nil) return nil;
@@ -191,8 +197,10 @@
 }
 
 
-// fixme, add support for negative indexing, even NSArray doesnt have that :)
+// With support for negative indexing
 - (id)objectAtIndex:(const int)inidx {
+
+    // NSLog(@"objectAtIndex %d", inidx);
 
     int idx = inidx;
 
@@ -200,7 +208,9 @@
     // we just need to convert it positive
     if (inidx < 0) idx = size + inidx;
 
-    if (idx >= size) return nil;
+    // NSLog(@"\tobjectAtIndex %d", idx);
+
+    if (idx >= size || idx < 0 || size == 0) return nil;
 
     LNode *n = nil;
 

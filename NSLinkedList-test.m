@@ -265,6 +265,24 @@ void test_add_remove() {
     assert([another objectAtIndex:-8] == [another objectAtIndex:0]);
 
 
+    NSLinkedList *empty = [NSLinkedList new];
+    assert(empty.count == 0);
+
+    int l = 0;
+    for (; l < 1000; ++l) {
+        assert([empty objectAtIndex:-l] == nil);
+    }
+
+
+    NSLinkedList *oneobject = [NSLinkedList listWithObject:@"dummy"];
+    assert(oneobject.count == 1);
+
+    assert([oneobject objectAtIndex:0] == [oneobject objectAtIndex:-1]);
+
+    for (l = 2; l < 1000; ++l) {
+        assert([oneobject objectAtIndex:-l] == nil);
+    }
+
 
 }
 
