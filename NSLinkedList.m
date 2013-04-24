@@ -151,13 +151,11 @@
 
 
 - (void)insertObject:(id)anObject beforeNode:(LNode *)node {
-
     [self insertObject:anObject betweenNode:node->prev andNode:node];
 }
 
 
 - (void)insertObject:(id)anObject afterNode:(LNode *)node {
-
     [self insertObject:anObject betweenNode:node andNode:node->next];
 }
 
@@ -371,6 +369,19 @@
     LNode *n = nil;
 
     for (n = first; n; n=n->next) {
+        [ret addObject:n->obj];
+    }
+
+    return [NSArray arrayWithArray:ret];
+}
+
+
+- (NSArray *)allObjectsReverse {
+
+    NSMutableArray *ret = SAFE_ARC_AUTORELEASE([[NSMutableArray alloc] initWithCapacity:size]);
+    LNode *n = nil;
+
+    for (n = last; n; n=n->prev) {
         [ret addObject:n->obj];
     }
 

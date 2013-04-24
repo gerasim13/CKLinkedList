@@ -109,6 +109,12 @@ void test_add_remove() {
     assert([[list allObjects] lastObject] == [list lastObject]);
 
     assert([[list allObjects] count] == [list count]);
+    assert([[list allObjects] count] == [[list allObjectsReverse] count]);
+
+    NSMutableArray *arrayOneCopy = [NSMutableArray arrayWithArray:[[[list allObjects] reverseObjectEnumerator] allObjects]];
+    [arrayOneCopy removeObjectsInArray:[list allObjectsReverse]];
+    assert([arrayOneCopy count] == 0);
+
 
     assert([list firstNode]->obj == [list firstObject]);
     assert([list lastNode]->obj == [list lastObject]);

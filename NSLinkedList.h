@@ -56,6 +56,7 @@ struct LNode {
 - (LNode *)lastNode;
 
 - (NSArray *)allObjects;
+- (NSArray *)allObjectsReverse;
 
 
 // Insert objects
