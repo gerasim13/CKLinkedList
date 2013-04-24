@@ -1,12 +1,12 @@
-LLtest: NSLinkedList.o NSLinkedList-test.m
-	g++ -O0 -Wall NSLinkedList.o NSLinkedList-test.m -o LLtest -ObjC -framework Foundation
+LLtest: NSLinkedList.h NSLinkedList.m NSLinkedList-test.m
+	clang -framework Foundation NSLinkedList.m NSLinkedList-test.m -o LLtest
 
+LLtestARC: NSLinkedList.h NSLinkedList.m NSLinkedList-test.m
+	clang -fobjc-arc NSLinkedList.m NSLinkedList-test.m -o LLtestARC
 
-NSLinkedList.o: NSLinkedList.m NSLinkedList.h
-	g++ -O0 -Wall -c NSLinkedList.m -ObjC
-
-test: LLtest
+test: LLtest LLtestARC
 	./LLtest
+	./LLtestARC
 
 clean:
-	rm -f a.out *.o LLTest *~*
+	rm -f a.out *.o LLtest* *~*

@@ -10,9 +10,29 @@
 
 #import "NSLinkedList.h"
 
+// 100% Support for both ARC and non-ARC projects
 #if __has_feature(objc_arc)
-#error "This source file must NOT be compiled with ARC. Use -fno-objc-arc compile flag to disable ARC for NSLinkedList"
+    #define SAFE_ARC_PROP_RETAIN strong
+    #define SAFE_ARC_RETAIN(x) (x)
+    #define SAFE_ARC_RELEASE(x)
+    #define SAFE_ARC_AUTORELEASE(x) (x)
+    #define SAFE_ARC_BLOCK_COPY(x) (x)
+    #define SAFE_ARC_BLOCK_RELEASE(x)
+    #define SAFE_ARC_SUPER_DEALLOC()
+    #define SAFE_ARC_AUTORELEASE_POOL_START() @autoreleasepool {
+    #define SAFE_ARC_AUTORELEASE_POOL_END() }
+#else
+    #define SAFE_ARC_PROP_RETAIN retain
+    #define SAFE_ARC_RETAIN(x) ([(x) retain])
+    #define SAFE_ARC_RELEASE(x) ([(x) release])
+    #define SAFE_ARC_AUTORELEASE(x) ([(x) autorelease])
+    #define SAFE_ARC_BLOCK_COPY(x) (Block_copy(x))
+    #define SAFE_ARC_BLOCK_RELEASE(x) (Block_release(x))
+    #define SAFE_ARC_SUPER_DEALLOC() ([super dealloc])
+    #define SAFE_ARC_AUTORELEASE_POOL_START() NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    #define SAFE_ARC_AUTORELEASE_POOL_END() [pool release];
 #endif
+
 
 @implementation NSLinkedList
 @synthesize first, last;
@@ -30,7 +50,7 @@
 
 
 + (id)listWithObject:(id)anObject {
-    NSLinkedList *n = [[[NSLinkedList alloc] initWithObject:anObject] autorelease];
+    NSLinkedList *n = SAFE_ARC_AUTORELEASE([[NSLinkedList alloc] initWithObject:anObject]);
     return n;
 }
 
@@ -231,9 +251,9 @@
 
     if (size == 0) return nil;
 
-    id ret = [last->obj retain];
+    id ret = SAFE_ARC_RETAIN(last->obj);
     [self removeNode:last];
-    return [ret autorelease];
+    return SAFE_ARC_AUTORELEASE(ret);
 
 }
 
@@ -242,9 +262,9 @@
 
     if (size == 0) return nil;
 
-    id ret = [first->obj retain];
+    id ret = SAFE_ARC_RETAIN(first->obj);
     [self removeNode:first];
-    return [ret autorelease];
+    return SAFE_ARC_AUTORELEASE(ret);
 
 }
 
@@ -272,7 +292,7 @@
         tmp->prev = aNode->prev;
     }
 
-    [aNode->obj release];
+    SAFE_ARC_RELEASE(aNode->obj);
     free(aNode);
     size--;
 
@@ -302,7 +322,7 @@
 
     while (n) {
         LNode *next = n->next;
-        [n->obj release];
+        SAFE_ARC_RELEASE(n->obj);
         free(n);
         n = next;
     }
@@ -345,7 +365,7 @@
 
 - (NSArray *)allObjects {
 
-    NSMutableArray *ret = [[[NSMutableArray alloc] initWithCapacity:size] autorelease];
+    NSMutableArray *ret = SAFE_ARC_AUTORELEASE([[NSMutableArray alloc] initWithCapacity:size]);
     LNode *n = nil;
 
     for (n = first; n; n=n->next) {
@@ -358,7 +378,7 @@
 
 - (void)dealloc {
     [self removeAllObjects];
-    [super dealloc];
+    SAFE_ARC_SUPER_DEALLOC();
 }
 
 
@@ -373,7 +393,7 @@ LNode * LNodeMake(id obj, LNode *next, LNode *prev) {
     LNode *n = malloc(sizeof(LNode));
     n->next = next;
     n->prev = prev;
-    n->obj = [obj retain];
+    n->obj = SAFE_ARC_RETAIN(obj);
     return n;
 };
 

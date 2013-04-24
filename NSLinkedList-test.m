@@ -10,10 +10,6 @@
 #import <assert.h>
 #import "NSLinkedList.h"
 
-#if __has_feature(objc_arc)
-#error "This source file must NOT be compiled with ARC. Use -fno-objc-arc compile flag to disable ARC for NSLinkedList"
-#endif
-
 static int i;
 
 /*
@@ -274,7 +270,7 @@ void test_add_remove() {
     }
 
 
-    NSLinkedList *oneobject = [NSLinkedList listWithObject:@"dummy"];
+    NSLinkedList *oneobject = [NSLinkedList listWithObject:@"tests"];
     assert(oneobject.count == 1);
 
     assert([oneobject objectAtIndex:0] == [oneobject objectAtIndex:-1]);
@@ -282,6 +278,15 @@ void test_add_remove() {
     for (l = 2; l < 1000; ++l) {
         assert([oneobject objectAtIndex:-l] == nil);
     }
+
+
+    LNode *n = [oneobject firstNode];
+
+    // this must pass
+    assert(n->obj);
+    assert([n->obj class]);
+    // NSLog(@"%@ are passing!", n->obj);
+
 
 
 }
@@ -296,7 +301,9 @@ void test_add_remove() {
 
 int main(int argc, const char *argv[]) {
 
+#if !__has_feature(objc_arc)
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+#endif
 
     printf("Running NSLinkedList.m Test Suite...\n");
 
@@ -309,7 +316,9 @@ int main(int argc, const char *argv[]) {
 
     printf("All tests passed successfully\n");
 
+#if !__has_feature(objc_arc)
     [pool drain];
+#endif
 
     return 0;
 }

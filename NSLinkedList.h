@@ -9,18 +9,13 @@
 
 #import <Foundation/Foundation.h>
 
-#if __has_feature(objc_arc)
-#error "This source file must NOT be compiled with ARC. Use -fno-objc-arc compile flag to disable ARC for NSLinkedList"
-#endif
-
 typedef struct LNode LNode;
 
 struct LNode {
-    id obj;
+    __unsafe_unretained id obj;
     LNode *next;
     LNode *prev;
 };
-
 
 @interface NSLinkedList : NSObject {
 
