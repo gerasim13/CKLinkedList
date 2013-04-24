@@ -50,8 +50,8 @@
 
 
 + (id)listWithObject:(id)anObject {
-    NSLinkedList *n = SAFE_ARC_AUTORELEASE([[NSLinkedList alloc] initWithObject:anObject]);
-    return n;
+    NSLinkedList *n = [[NSLinkedList alloc] initWithObject:anObject];
+    return SAFE_ARC_AUTORELEASE(n);
 }
 
 
@@ -293,6 +293,7 @@
     }
 
     SAFE_ARC_RELEASE(aNode->obj);
+    aNode->obj = nil;
     free(aNode);
     size--;
 
@@ -323,6 +324,7 @@
     while (n) {
         LNode *next = n->next;
         SAFE_ARC_RELEASE(n->obj);
+        n->obj = nil;
         free(n);
         n = next;
     }
