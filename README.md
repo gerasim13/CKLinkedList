@@ -7,9 +7,9 @@ On the other hand, linked lists by themselves do not allow random access to the 
 
 ###Installation 
 
-1. Add `NSLinkedList.h` and `NSLinkedList.m` to your project, for example in your `3rdparty` directory
-2. Add `#import "NSLinkedList.h"` to your project's `.pch` file
-3. NSLinkedList class is now avaiable anywhere in your project, enjoy!
+1. Add `CKLinkedList.h` and `CKLinkedList.m` to your project, for example in your `3rdparty` directory
+2. Add `#import "CKLinkedList.h"` to your project's `.pch` file
+3. CKLinkedList class is now avaiable anywhere in your project, enjoy!
 
 ###Benefits vs. NSArray
 * Efficient insertion and removal of elements at any index
@@ -18,7 +18,7 @@ On the other hand, linked lists by themselves do not allow random access to the 
 
 ###Example Usage
 
-	NSLinkedList *myList = [[NSLinkedList alloc] init];
+	CKLinkedList *myList = [[CKLinkedList alloc] init];
 
 	[myList addObject:obj2];  // add object to end of list
 	[myList addObject:obj3];  // add object to end of list
