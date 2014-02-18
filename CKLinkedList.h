@@ -1,5 +1,5 @@
 //
-//  NSLinkedList.h
+//  CKLinkedList.h
 //
 //  Created by Matt Schettler on 5/30/10.
 //  Copyright 2010-2013 mschettler@gmail.com. All rights reserved.
@@ -17,7 +17,7 @@ struct LNode {
     LNode *prev;
 };
 
-@interface NSLinkedList : NSObject {
+@interface CKLinkedList : NSObject {
 
     LNode *first;
     LNode *last;

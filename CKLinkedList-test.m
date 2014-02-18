@@ -1,5 +1,5 @@
 //
-// NSLinkedList Tests
+// CKLinkedList Tests
 //
 // test with:
 //      make test
@@ -8,7 +8,7 @@
 //
 
 #import <assert.h>
-#import "NSLinkedList.h"
+#import "CKLinkedList.h"
 
 static int i;
 
@@ -19,13 +19,13 @@ static int i;
  */
 void test_init() {
 
-    NSLinkedList *list1 = [[NSLinkedList alloc] init];
+    CKLinkedList *list1 = [[CKLinkedList alloc] init];
     assert(list1);
     assert([list1 count] == 0);
     assert([list1 lastObject] == nil);
     assert([list1 secondLastObject] == nil);
 
-    NSLinkedList *list2 = [[NSLinkedList alloc] initWithObject:@"NSString"];
+    CKLinkedList *list2 = [[CKLinkedList alloc] initWithObject:@"NSString"];
     assert(list2);
     assert([list2 count] == 1);
     assert([list2 lastObject] != nil);
@@ -53,7 +53,7 @@ void test_init() {
  */
 void test_add_remove() {
 
-    NSLinkedList *list = [[NSLinkedList alloc] init];
+    CKLinkedList *list = [[CKLinkedList alloc] init];
     NSString *str1 = @"This is a test string";
     NSString *str2 = @"This is another test string";
 
@@ -231,11 +231,11 @@ void test_add_remove() {
     }
 
 
-    NSLinkedList *another = [[NSLinkedList alloc] initWithObject:@"test1"];
+    CKLinkedList *another = [[CKLinkedList alloc] initWithObject:@"test1"];
 
     assert(another.count == 1);
 
-    NSLinkedList *foo = [[NSLinkedList alloc] initWithObject:another];
+    CKLinkedList *foo = [[CKLinkedList alloc] initWithObject:another];
     assert(foo.count == 1);
 
     assert([[foo allObjects] count] == 1);
@@ -267,7 +267,7 @@ void test_add_remove() {
     assert([another objectAtIndex:-8] == [another objectAtIndex:0]);
 
 
-    NSLinkedList *empty = [NSLinkedList new];
+    CKLinkedList *empty = [CKLinkedList new];
     assert(empty.count == 0);
 
     int l = 0;
@@ -276,7 +276,7 @@ void test_add_remove() {
     }
 
 
-    NSLinkedList *oneobject = [NSLinkedList listWithObject:@"tests"];
+    CKLinkedList *oneobject = [CKLinkedList listWithObject:@"tests"];
     assert(oneobject.count == 1);
 
     assert([oneobject objectAtIndex:0] == [oneobject objectAtIndex:-1]);
@@ -311,7 +311,7 @@ int main(int argc, const char *argv[]) {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 #endif
 
-    printf("Running NSLinkedList.m Test Suite...\n");
+    printf("Running CKLinkedList.m Test Suite...\n");
 
 
     test_init();

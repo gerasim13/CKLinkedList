@@ -1,5 +1,5 @@
 //
-//  NSLinkedList.m
+//  CKLinkedList.m
 //
 //  Created by Matt Schettler on 5/30/10.
 //  Copyright 2010-2013 mschettler@gmail.com. All rights reserved.
@@ -8,7 +8,7 @@
 //
 
 
-#import "NSLinkedList.h"
+#import "CKLinkedList.h"
 
 // 100% Support for both ARC and non-ARC projects
 #if __has_feature(objc_arc)
@@ -34,7 +34,7 @@
 #endif
 
 
-@implementation NSLinkedList
+@implementation CKLinkedList
 @synthesize first, last;
 
 
@@ -50,7 +50,7 @@
 
 
 + (id)listWithObject:(id)anObject {
-    NSLinkedList *n = [[NSLinkedList alloc] initWithObject:anObject];
+    CKLinkedList *n = [[CKLinkedList alloc] initWithObject:anObject];
     return SAFE_ARC_AUTORELEASE(n);
 }
 
@@ -396,7 +396,7 @@
 
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"NSLinkedList with %d objects", size];
+    return [NSString stringWithFormat:@"CKLinkedList with %d objects", size];
 }
 
 

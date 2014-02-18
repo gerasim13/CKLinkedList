@@ -1,8 +1,8 @@
-LLtest: NSLinkedList.h NSLinkedList.m NSLinkedList-test.m
-	clang -framework Foundation NSLinkedList.m NSLinkedList-test.m -o LLtest
+LLtest: CKLinkedList.h CKLinkedList.m CKLinkedList-test.m
+	clang -framework Foundation CKLinkedList.m CKLinkedList-test.m -o LLtest
 
-LLtestARC: NSLinkedList.h NSLinkedList.m NSLinkedList-test.m
-	clang -fobjc-arc NSLinkedList.m NSLinkedList-test.m -o LLtestARC
+LLtestARC: CKLinkedList.h CKLinkedList.m CKLinkedList-test.m
+	clang -fobjc-arc CKLinkedList.m CKLinkedList-test.m -o LLtestARC
 
 test: LLtest LLtestARC
 	./LLtest
