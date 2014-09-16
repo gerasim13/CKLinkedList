@@ -86,17 +86,17 @@
 }
 
 
-- (id)lastObject {
+- (__unsafe_unretained id)lastObject {
     return last ? last->obj : nil;
 }
 
 
-- (id)firstObject {
+- (__unsafe_unretained id)firstObject {
     return first ? first->obj : nil;
 }
 
 
-- (id)secondLastObject {
+- (__unsafe_unretained id)secondLastObject {
 
     if (last && last->prev) {
         return last->prev->obj;
@@ -214,6 +214,10 @@
     size++;
 }
 
+- (id)objectAtIndexedSubscript:(const int)idx
+{
+    return [self objectAtIndex:idx];
+}
 
 // With support for negative indexing!
 - (id)objectAtIndex:(const int)inidx {

@@ -46,11 +46,12 @@ struct LNode {
 - (void)removeNode:(LNode *)aNode;          // remove a given node
 
 
-- (id)objectAtIndex:(const int)idx;
-- (id)lastObject;
-- (id)firstObject;
-- (id)secondLastObject;
-- (id)top;
+- (__unsafe_unretained id)objectAtIndexedSubscript:(const int)idx;
+- (__unsafe_unretained id)objectAtIndex:(const int)idx;
+- (__unsafe_unretained id)lastObject;
+- (__unsafe_unretained id)firstObject;
+- (__unsafe_unretained id)secondLastObject;
+- (__unsafe_unretained id)top;
 
 - (LNode *)firstNode;
 - (LNode *)lastNode;
@@ -72,8 +73,8 @@ struct LNode {
 
 //- (void)replaceObjectAtIndex:(int) withObject:(id)obj;    // replaces object at a given index with the passed object
 
-@property (readonly) LNode *first;
-@property (readonly) LNode *last;
+@property (nonatomic, readonly) LNode *first;
+@property (nonatomic, readonly) LNode *last;
 
 @end
 
