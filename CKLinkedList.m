@@ -86,27 +86,6 @@
 }
 
 
-- (__unsafe_unretained id)lastObject {
-    return last ? last->obj : nil;
-}
-
-
-- (__unsafe_unretained id)firstObject {
-    return first ? first->obj : nil;
-}
-
-
-- (__unsafe_unretained id)secondLastObject {
-
-    if (last && last->prev) {
-        return last->prev->obj;
-    }
-
-    return nil;
-
-}
-
-
 - (LNode *)firstNode {
     return first;
 }
@@ -114,11 +93,6 @@
 
 - (LNode *)lastNode {
     return last;
-}
-
-
-- (id)top {
-    return [self lastObject];
 }
 
 
@@ -214,13 +188,13 @@
     size++;
 }
 
-- (id)objectAtIndexedSubscript:(const int)idx
-{
+
+- (__unsafe_unretained id)objectAtIndexedSubscript:(const int)idx {
     return [self objectAtIndex:idx];
 }
 
 // With support for negative indexing!
-- (id)objectAtIndex:(const int)inidx {
+- (__unsafe_unretained id)objectAtIndex:(const int)inidx {
 
     int idx = inidx;
 
@@ -246,6 +220,32 @@
 
     return nil;
 
+}
+
+
+- (__unsafe_unretained id)lastObject {
+    return last ? last->obj : nil;
+}
+
+
+- (__unsafe_unretained id)firstObject {
+    return first ? first->obj : nil;
+}
+
+
+- (__unsafe_unretained id)secondLastObject {
+    
+    if (last && last->prev) {
+        return last->prev->obj;
+    }
+    
+    return nil;
+    
+}
+
+
+- (__unsafe_unretained id)top {
+    return [self lastObject];
 }
 
 
